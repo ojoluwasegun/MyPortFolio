@@ -24,6 +24,35 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
+        <script>
+            document.getElementById("contactForm").addEventListener("submit", function(e) {
+                e.preventDefault();
+            
+                const formData = new FormData(this);
+            
+                fetch("https://formsubmit.co/ajax/ojoluwasegun@gmail.com", {
+                    method: "POST",
+                    headers: {
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success === "true") {
+                        document.getElementById("successMessage").style.display = "block";
+                        document.getElementById("contactForm").reset();
+                    } else {
+                        alert("Something went wrong. Please try again.");
+                    }
+                })
+                .catch(error => {
+                    alert("Error sending message.");
+                });
+            });
+            </script>
+                    
+    
     </head>
 
     <!-- Project Modal -->
@@ -850,30 +879,29 @@
                                 <div class="mt-4">
                                     <h4 class="text-white mb-3">Send Me a Message</h4>
         
-                                    <form action="https://formsubmit.co/ojoluwasegun@gmail.com" method="POST">
-        
-                                        <!-- Disable captcha -->
-                                        <input type="hidden" name="_captcha" value="false">
-        
-                                        <!-- Redirect after submit (optional) -->
-                                        <input type="hidden" name="_next" value="https://yourwebsite.com/thank-you.html">
-        
+                                    <form id="contactForm">
+
                                         <div class="form-group">
                                             <input type="text" name="name" class="form-control" placeholder="Your Name" required>
                                         </div>
-        
+                                    
                                         <div class="form-group">
                                             <input type="email" name="email" class="form-control" placeholder="Your Email" required>
                                         </div>
-        
+                                    
                                         <div class="form-group">
                                             <textarea name="message" class="form-control" rows="5" placeholder="Your Message" required></textarea>
                                         </div>
-        
+                                    
                                         <button type="submit" class="btn btn-primary">
                                             Send Message
                                         </button>
-        
+                                    
+                                        <!-- SUCCESS MESSAGE -->
+                                        <div id="successMessage" style="display:none; margin-top:15px; color:lightgreen;">
+                                            ✅ Message sent successfully!
+                                        </div>
+                                    
                                     </form>
                                 </div>
         
